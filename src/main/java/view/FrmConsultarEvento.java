@@ -61,6 +61,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtIdConsulta = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         lblResultadoEstado = new javax.swing.JLabel();
@@ -69,7 +70,6 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel8.setText("Nombre:");
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setOpaque(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -113,40 +113,25 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel11.setText("Descripcion:");
 
         lblResultadoNombre.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoNombre.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoNombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoNombre.setOpaque(true);
 
         lblResultadoId.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoId.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoId.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoId.setOpaque(true);
 
         lblResultadoTipo.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoTipo.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoTipo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoTipo.setOpaque(true);
 
         lblResultadoFecha.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoFecha.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoFecha.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoFecha.setOpaque(true);
 
         lblResultadoHora.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoHora.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoHora.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoHora.setOpaque(true);
 
         lblResultadoLugar.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoLugar.setForeground(new java.awt.Color(0, 0, 0));
-        lblResultadoLugar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoLugar.setOpaque(true);
 
-        lblResultadoDescripcion.setBackground(new java.awt.Color(255, 255, 255));
         lblResultadoDescripcion.setColumns(20);
-        lblResultadoDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         lblResultadoDescripcion.setRows(5);
-        lblResultadoDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(lblResultadoDescripcion);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -213,7 +198,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
@@ -222,9 +207,6 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("ID del evento:");
 
-        txtIdConsulta.setBackground(new java.awt.Color(255, 255, 255));
-        txtIdConsulta.setForeground(new java.awt.Color(0, 0, 0));
-        txtIdConsulta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtIdConsulta.addActionListener(this::txtIdConsultaActionPerformed);
 
         btnBuscar.setBackground(new java.awt.Color(255, 117, 31));
@@ -233,17 +215,24 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         btnBuscar.setText("Buscar Evento");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
+        jButton1.setBackground(new java.awt.Color(255, 117, 31));
+        jButton1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Consultar");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIdConsulta)
+                .addComponent(txtIdConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(46, 46, 46))
         );
         jPanel4Layout.setVerticalGroup(
@@ -254,7 +243,9 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtIdConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
@@ -263,9 +254,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel12.setText("Estado");
 
         lblResultadoEstado.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoEstado.setForeground(new java.awt.Color(0, 0, 0));
         lblResultadoEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblResultadoEstado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoEstado.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -290,7 +279,6 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         );
 
         btnVolver.setBackground(new java.awt.Color(255, 117, 31));
-        btnVolver.setForeground(new java.awt.Color(0, 0, 0));
         btnVolver.setText("Volver ");
         btnVolver.addActionListener(this::btnVolverActionPerformed);
 
@@ -387,6 +375,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnVolver;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
