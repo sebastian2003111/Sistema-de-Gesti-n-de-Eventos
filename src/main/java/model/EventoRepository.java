@@ -25,4 +25,14 @@ public class EventoRepository implements IEventoRepository {
 
         return null;
     }
+
+    @Override
+    public void actualizar(Evento eventoActualizado) {
+        for (int i = 0; i < eventos.size(); i++) {
+            if (eventos.get(i).getIdEvento() == eventoActualizado.getIdEvento()) {
+                eventos.set(i, eventoActualizado);
+                return;
+            }
+        }
+    }
 }
