@@ -24,7 +24,7 @@ public class EventoService {
             throw new IllegalArgumentException("Debe seleccionar un tipo de evento.");
         }
 
-        // --- Autogenerar ID secuencial ---
+        // --- Autogenerar ID secuencial. ---
         int nuevoId = 1;
         for (Evento e : repository.obtenerTodos()) {
             if (e.getIdEvento() >= nuevoId) {
