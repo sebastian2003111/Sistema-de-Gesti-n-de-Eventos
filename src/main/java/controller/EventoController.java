@@ -26,6 +26,11 @@ public class EventoController {
         vista.setTitle("Sistema de Gestión de Eventos");
         vista.setLocationRelativeTo(null);
 
+        // --- Configurar campo de ID (bloqueado, autogenerado) ---
+        vista.txtId.setEditable(false);
+        vista.txtId.setText("Automático");
+        // --------------------------------------------------------
+
         // 1. Configurar el modelo interno de los Spinners para que sean tipo Fecha/Hora
         vista.spnFecha.setModel(new SpinnerDateModel());
         vista.spnHora.setModel(new SpinnerDateModel());
@@ -44,7 +49,6 @@ public class EventoController {
     private void crearEvento() {
         try {
             // Capturar datos usando los getters de la vista
-            String idTexto = vista.getIdEvento();
             String nombre = vista.getNombre();
             String descripcion = vista.getDescripcion();
             String tipo = vista.getTipo();
@@ -52,16 +56,17 @@ public class EventoController {
             java.util.Date fecha = vista.getFecha();
             java.util.Date hora = vista.getHora();
 
-            // Delegar la lógica de creación al servicio
-            servicio.crearEvento(idTexto, nombre, descripcion, tipo, lugar, fecha, hora);
+            // Delegar la lógica de creación al servicio (que autogenera el ID)
+            int nuevoId = servicio.crearEvento(nombre, descripcion, tipo, lugar, fecha, hora);
 
             // Mostrar mensaje de éxito a través de la vista
             vista.mostrarMensajeExito("¡Evento registrado con éxito!\n\n"
-                    + "ID: " + idTexto + "\n"
+                    + "ID: " + nuevoId + "\n"
                     + "Nombre: " + nombre + "\n"
                     + "Tipo: " + tipo);
 
             vista.limpiarFormulario();
+            vista.txtId.setText("Automático");
 
         } catch (IllegalArgumentException ex) {
             // Mostrar mensajes de error de validación

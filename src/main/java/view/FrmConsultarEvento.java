@@ -49,19 +49,19 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        lblResultadoNombre = new javax.swing.JLabel();
         lblResultadoId = new javax.swing.JLabel();
-        lblResultadoTipo = new javax.swing.JLabel();
-        lblResultadoFecha = new javax.swing.JLabel();
-        lblResultadoHora = new javax.swing.JLabel();
-        lblResultadoLugar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblResultadoDescripcion = new javax.swing.JTextArea();
+        txtResultadoNombre = new javax.swing.JTextField();
+        cbxResultadoTipo = new javax.swing.JComboBox<>();
+        spnResultadoFecha = new javax.swing.JSpinner();
+        spnResultadoHora = new javax.swing.JSpinner();
+        txtResultadoLugar = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtIdConsulta = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         lblResultadoEstado = new javax.swing.JLabel();
@@ -70,6 +70,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel8.setText("Nombre:");
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setOpaque(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -112,27 +113,27 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Descripcion:");
 
-        lblResultadoNombre.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoNombre.setOpaque(true);
-
         lblResultadoId.setBackground(new java.awt.Color(255, 255, 255));
+        lblResultadoId.setForeground(new java.awt.Color(0, 0, 0));
+        lblResultadoId.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoId.setOpaque(true);
 
-        lblResultadoTipo.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoTipo.setOpaque(true);
-
-        lblResultadoFecha.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoFecha.setOpaque(true);
-
-        lblResultadoHora.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoHora.setOpaque(true);
-
-        lblResultadoLugar.setBackground(new java.awt.Color(255, 255, 255));
-        lblResultadoLugar.setOpaque(true);
-
+        lblResultadoDescripcion.setBackground(new java.awt.Color(255, 255, 255));
         lblResultadoDescripcion.setColumns(20);
+        lblResultadoDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         lblResultadoDescripcion.setRows(5);
+        lblResultadoDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(lblResultadoDescripcion);
+
+        txtResultadoNombre.setBackground(new java.awt.Color(255, 255, 255));
+        txtResultadoNombre.setForeground(new java.awt.Color(0, 0, 0));
+
+        cbxResultadoTipo.setBackground(new java.awt.Color(255, 255, 255));
+        cbxResultadoTipo.setForeground(new java.awt.Color(0, 0, 0));
+        cbxResultadoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Académico", "Conferencia", "Social", "Empresarial", "Cultural", "Deportivo" }));
+
+        txtResultadoLugar.setBackground(new java.awt.Color(255, 255, 255));
+        txtResultadoLugar.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -142,9 +143,6 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,19 +151,16 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(lblResultadoId, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblResultadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblResultadoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblResultadoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblResultadoHora, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblResultadoLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtResultadoNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblResultadoId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxResultadoTipo, 0, 192, Short.MAX_VALUE)
+                            .addComponent(spnResultadoFecha)
+                            .addComponent(spnResultadoHora)
+                            .addComponent(txtResultadoLugar)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,28 +172,28 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblResultadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblResultadoTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                    .addComponent(txtResultadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxResultadoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnResultadoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnResultadoHora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblResultadoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblResultadoHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(lblResultadoLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtResultadoLugar)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
@@ -207,6 +202,9 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("ID del evento:");
 
+        txtIdConsulta.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdConsulta.setForeground(new java.awt.Color(0, 0, 0));
+        txtIdConsulta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtIdConsulta.addActionListener(this::txtIdConsultaActionPerformed);
 
         btnBuscar.setBackground(new java.awt.Color(255, 117, 31));
@@ -215,10 +213,11 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         btnBuscar.setText("Buscar Evento");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jButton1.setBackground(new java.awt.Color(255, 117, 31));
-        jButton1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Consultar");
+        btnActualizar.setBackground(new java.awt.Color(255, 117, 31));
+        btnActualizar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar Evento");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -228,12 +227,12 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIdConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(txtIdConsulta)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(46, 46, 46))
+                .addGap(30, 30, 30))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,9 +242,9 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtIdConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnActualizar)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
@@ -254,7 +253,9 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         jLabel12.setText("Estado");
 
         lblResultadoEstado.setBackground(new java.awt.Color(255, 255, 255));
+        lblResultadoEstado.setForeground(new java.awt.Color(0, 0, 0));
         lblResultadoEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblResultadoEstado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblResultadoEstado.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -264,7 +265,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblResultadoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
         );
@@ -279,6 +280,7 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         );
 
         btnVolver.setBackground(new java.awt.Color(255, 117, 31));
+        btnVolver.setForeground(new java.awt.Color(0, 0, 0));
         btnVolver.setText("Volver ");
         btnVolver.addActionListener(this::btnVolverActionPerformed);
 
@@ -347,6 +349,10 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -366,6 +372,14 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
+        // Configurar colores globales para los cuadros de diálogo (JOptionPane)
+        javax.swing.UIManager.put("OptionPane.background", new java.awt.Color(51, 51, 51));
+        javax.swing.UIManager.put("Panel.background", new java.awt.Color(51, 51, 51));
+        javax.swing.UIManager.put("OptionPane.messageForeground", new java.awt.Color(255, 255, 255));
+        javax.swing.UIManager.put("Button.background", new java.awt.Color(255, 117, 31));
+        javax.swing.UIManager.put("Button.foreground", new java.awt.Color(255, 255, 255));
+        javax.swing.UIManager.put("Button.font", new java.awt.Font("Arial Black", 0, 12));
         //</editor-fold>
 
         /* Create and display the form */
@@ -373,9 +387,10 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnActualizar;
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JComboBox<String> cbxResultadoTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -395,13 +410,12 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea lblResultadoDescripcion;
     private javax.swing.JLabel lblResultadoEstado;
-    private javax.swing.JLabel lblResultadoFecha;
-    private javax.swing.JLabel lblResultadoHora;
     private javax.swing.JLabel lblResultadoId;
-    private javax.swing.JLabel lblResultadoLugar;
-    private javax.swing.JLabel lblResultadoNombre;
-    private javax.swing.JLabel lblResultadoTipo;
+    public javax.swing.JSpinner spnResultadoFecha;
+    public javax.swing.JSpinner spnResultadoHora;
     private javax.swing.JTextField txtIdConsulta;
+    public javax.swing.JTextField txtResultadoLugar;
+    public javax.swing.JTextField txtResultadoNombre;
     // End of variables declaration//GEN-END:variables
 
     public String getIdConsulta() {
@@ -413,27 +427,51 @@ public class FrmConsultarEvento extends javax.swing.JFrame {
     }
 
     public void setResultadoNombre(String texto) {
-        lblResultadoNombre.setText(texto);
+        txtResultadoNombre.setText(texto);
+    }
+
+    public String getResultadoNombre() {
+        return txtResultadoNombre.getText();
     }
 
     public void setResultadoTipo(String texto) {
-        lblResultadoTipo.setText(texto);
+        cbxResultadoTipo.setSelectedItem(texto);
     }
 
-    public void setResultadoFecha(String texto) {
-        lblResultadoFecha.setText(texto);
+    public String getResultadoTipo() {
+        return cbxResultadoTipo.getSelectedItem().toString();
     }
 
-    public void setResultadoHora(String texto) {
-        lblResultadoHora.setText(texto);
+    public void setResultadoFecha(java.util.Date fecha) {
+        spnResultadoFecha.setValue(fecha);
+    }
+
+    public java.util.Date getResultadoFecha() {
+        return (java.util.Date) spnResultadoFecha.getValue();
+    }
+
+    public void setResultadoHora(java.util.Date hora) {
+        spnResultadoHora.setValue(hora);
+    }
+
+    public java.util.Date getResultadoHora() {
+        return (java.util.Date) spnResultadoHora.getValue();
     }
 
     public void setResultadoLugar(String texto) {
-        lblResultadoLugar.setText(texto);
+        txtResultadoLugar.setText(texto);
+    }
+
+    public String getResultadoLugar() {
+        return txtResultadoLugar.getText();
     }
 
     public void setResultadoDescripcion(String texto) {
         lblResultadoDescripcion.setText(texto);
+    }
+
+    public String getResultadoDescripcion() {
+        return lblResultadoDescripcion.getText();
     }
 
     public void setResultadoEstado(String texto) {

@@ -268,7 +268,7 @@ public class FrmEvento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
                     .addComponent(btnConsultar))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -324,6 +324,14 @@ public class FrmEvento extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
+        // Configurar colores globales para los cuadros de diálogo (JOptionPane)
+        javax.swing.UIManager.put("OptionPane.background", new java.awt.Color(51, 51, 51));
+        javax.swing.UIManager.put("Panel.background", new java.awt.Color(51, 51, 51));
+        javax.swing.UIManager.put("OptionPane.messageForeground", new java.awt.Color(255, 255, 255));
+        javax.swing.UIManager.put("Button.background", new java.awt.Color(255, 117, 31));
+        javax.swing.UIManager.put("Button.foreground", new java.awt.Color(255, 255, 255));
+        javax.swing.UIManager.put("Button.font", new java.awt.Font("Arial Black", 0, 12));
         //</editor-fold>
 
         /* Create and display the form */
