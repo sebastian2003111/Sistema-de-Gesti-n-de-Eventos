@@ -7,4 +7,6 @@ public interface IEventoRepository {
     List<Evento> obtenerTodos();
     Evento buscarPorId(int id);
     void actualizar(Evento evento);
+    void eliminar(int id);
+    int obtenerSiguienteId();
 }
