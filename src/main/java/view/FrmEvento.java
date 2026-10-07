@@ -1,425 +1,345 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-/**
- *
- * @author SEBASTIAN_BOHORQUEZ
- */
-public class FrmEvento extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmEvento.class.getName());
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import java.util.logging.Logger;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.TimePickerSettings;
 
-    /**
-     * Creates new form FrmEvento
-     */
+public class FrmEvento extends JFrame {
+
+    private static final Logger logger = Logger.getLogger(FrmEvento.class.getName());
+
+    // Componentes Públicos (Requeridos por EventoController)
+    public JButton btnConsultar;
+    public JButton btnCrear;
+    public JButton btnListar;
+    
+    public JComboBox<String> cbxTipo;
+    public DatePicker datePickerFecha;
+    public TimePicker timePickerHora;
+    public JTextArea txtDescripcion;
+    public JTextField txtId;
+    public JTextField txtLugar;
+    public JTextField txtNombre;
+    
+    public JSpinner spnFecha = new JSpinner(); 
+    public JSpinner spnHora = new JSpinner();
+    public JLabel lblLogo; // Mantenido por compatibilidad
+
     public FrmEvento() {
-        initComponents();
-        
-        // Envolver jPanel1 en un GridBagLayout para mantenerlo centrado al ampliar la ventana
-        javax.swing.JPanel wrapper = new javax.swing.JPanel(new java.awt.GridBagLayout());
-        wrapper.setBackground(jPanel1.getBackground());
-        wrapper.add(jPanel1);
-        setContentPane(wrapper);
-        
-        // Centrar la ventana en la pantalla al iniciar
-        setLocationRelativeTo(null);
+        initComponentsCustom();
     }
 
-    
-    
-
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        btnCrear = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        cbxTipo = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
-        spnFecha = new javax.swing.JSpinner();
-        jLabel12 = new javax.swing.JLabel();
-        spnHora = new javax.swing.JSpinner();
-        jLabel13 = new javax.swing.JLabel();
-        txtLugar = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDescripcion = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        lblLogo = new javax.swing.JLabel();
-        btnConsultar = new javax.swing.JButton();
-
+    private void initComponentsCustom() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 0));
+        setBackground(new Color(25, 25, 25));
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        JPanel mainPanel = new JPanel(new BorderLayout(20, 20));
+        mainPanel.setBackground(new Color(25, 25, 25));
+        mainPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        btnCrear.setBackground(new java.awt.Color(255, 117, 31));
-        btnCrear.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("Crear Evento");
-        btnCrear.addActionListener(this::btnCrearActionPerformed);
+        // =====================================
+        // TÍTULO DEL MÓDULO (NORTE)
+        // =====================================
+        JPanel pnlTitulo = new JPanel(new GridLayout(2, 1));
+        pnlTitulo.setBackground(new Color(25, 25, 25));
+        JLabel lblTitulo = new JLabel("📅 Crear Nuevo Evento");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        lblTitulo.setForeground(Color.WHITE);
+        JLabel lblSub = new JLabel("Completa la información del evento que deseas registrar en el sistema.");
+        lblSub.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        lblSub.setForeground(Color.LIGHT_GRAY);
+        pnlTitulo.add(lblTitulo);
+        pnlTitulo.add(lblSub);
+        mainPanel.add(pnlTitulo, BorderLayout.NORTH);
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        // =====================================
+        // CONTENEDOR CENTRAL DIVIDIDO
+        // =====================================
+        JPanel pnlCentro = new JPanel(new GridBagLayout());
+        pnlCentro.setBackground(new Color(25, 25, 25));
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.fill = GridBagConstraints.BOTH;
+        gbcMain.weighty = 1.0;
+        gbcMain.insets = new Insets(0, 0, 0, 10);
 
-        jLabel8.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("ID Evento");
+        // --- IZQUIERDA: FORMULARIO ---
+        gbcMain.gridx = 0; gbcMain.weightx = 0.65;
+        JPanel pnlFormWrapper = new JPanel(new BorderLayout());
+        pnlFormWrapper.setBackground(new Color(35, 35, 35));
+        pnlFormWrapper.setBorder(new CompoundBorder(
+                new LineBorder(new Color(50, 50, 50), 1, true),
+                new EmptyBorder(25, 25, 25, 25)
+        ));
 
-        txtId.setBackground(new java.awt.Color(255, 255, 255));
-        txtId.setForeground(new java.awt.Color(0, 0, 0));
-        txtId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 117, 31)));
-        txtId.addActionListener(this::txtIdActionPerformed);
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(35, 35, 35));
+        GridBagConstraints gbcF = new GridBagConstraints();
+        gbcF.fill = GridBagConstraints.HORIZONTAL;
+        gbcF.insets = new Insets(5, 10, 5, 10);
+        gbcF.weightx = 0.5;
 
-        jLabel9.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Nombre");
+        // Fila 1: ID Evento (Izquierda) | Fecha (Derecha)
+        gbcF.gridy = 0; gbcF.gridx = 0;
+        JPanel pnlLabelId = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        pnlLabelId.setBackground(new Color(35, 35, 35));
+        pnlLabelId.add(crearLabel("ID Evento "));
+        JLabel lblAuto = new JLabel(" Automático ");
+        lblAuto.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        lblAuto.setForeground(Color.WHITE);
+        lblAuto.setOpaque(true);
+        lblAuto.setBackground(new Color(200, 80, 20)); // Naranja quemado
+        pnlLabelId.add(lblAuto);
+        formPanel.add(pnlLabelId, gbcF);
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
-        txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 117, 31)));
+        gbcF.gridx = 1;
+        formPanel.add(crearLabel("Fecha del evento"), gbcF);
 
-        jLabel10.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Tipo");
+        gbcF.gridy = 1; gbcF.gridx = 0;
+        txtId = crearTextField();
+        txtId.setEditable(false);
+        txtId.setText("1");
+        formPanel.add(txtId, gbcF);
 
-        cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
-        cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Académico", "Conferencia", "Social", "Empresarial", "Cultural", "Deportivo" }));
-        cbxTipo.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 153, 0)));
-        cbxTipo.addActionListener(this::cbxTipoActionPerformed);
+        gbcF.gridx = 1;
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        datePickerFecha = new DatePicker(dateSettings);
+        formPanel.add(datePickerFecha, gbcF);
 
-        jLabel11.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Fecha");
-
-        spnFecha.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 153, 0)));
-
-        jLabel12.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Hora");
-
-        spnHora.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 153, 0)));
-
-        jLabel13.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Lugar");
-
-        txtLugar.setBackground(new java.awt.Color(255, 255, 255));
-        txtLugar.setForeground(new java.awt.Color(0, 0, 0));
-        txtLugar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 117, 31)));
-        txtLugar.addActionListener(this::txtLugarActionPerformed);
-
-        jLabel14.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Descripcion:");
-
-        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
-        txtDescripcion.setColumns(20);
-        txtDescripcion.setForeground(new java.awt.Color(0, 0, 0));
-        txtDescripcion.setRows(5);
-        txtDescripcion.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 117, 31)));
-        jScrollPane1.setViewportView(txtDescripcion);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 41, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtId)
-                            .addComponent(txtNombre)
-                            .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spnFecha)
-                            .addComponent(txtLugar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(spnHora, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(43, 43, 43))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(spnHora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Crear Nuevo Evento");
-
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
-
-        lblLogo.setBackground(new java.awt.Color(255, 255, 255));
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo_negro2.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnConsultar.setBackground(new java.awt.Color(255, 117, 31));
-        btnConsultar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnConsultar.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultar.setText("Consultar Evento");
-        btnConsultar.addActionListener(this::btnConsultarActionPerformed);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnCrear)
-                .addGap(18, 18, 18)
-                .addComponent(btnConsultar)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCrear)
-                    .addComponent(btnConsultar))
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxTipoActionPerformed
-
-    private void txtLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLugarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLugarActionPerformed
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
-
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCrearActionPerformed
-
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        // Fila 2: Nombre (Izquierda) | Hora (Derecha)
+        gbcF.gridy = 2; gbcF.gridx = 0; gbcF.insets = new Insets(15, 10, 5, 10);
+        formPanel.add(crearLabel("Nombre del evento *"), gbcF);
         
-        // Configurar colores globales para los cuadros de diálogo (JOptionPane)
-        javax.swing.UIManager.put("OptionPane.background", new java.awt.Color(51, 51, 51));
-        javax.swing.UIManager.put("Panel.background", new java.awt.Color(51, 51, 51));
-        javax.swing.UIManager.put("OptionPane.messageForeground", new java.awt.Color(255, 255, 255));
-        javax.swing.UIManager.put("Button.background", new java.awt.Color(255, 117, 31));
-        javax.swing.UIManager.put("Button.foreground", new java.awt.Color(255, 255, 255));
-        javax.swing.UIManager.put("Button.font", new java.awt.Font("Arial Black", 0, 12));
-        //</editor-fold>
+        gbcF.gridx = 1;
+        formPanel.add(crearLabel("Hora del evento"), gbcF);
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmEvento().setVisible(true));
+        gbcF.gridy = 3; gbcF.gridx = 0; gbcF.insets = new Insets(5, 10, 5, 10);
+        txtNombre = crearTextField();
+        txtNombre.putClientProperty("JTextField.placeholderText", "Ej. Feria de Tecnología");
+        formPanel.add(txtNombre, gbcF);
+
+        gbcF.gridx = 1;
+        TimePickerSettings timeSettings = new TimePickerSettings();
+        timeSettings.use24HourClockFormat();
+        timeSettings.setFormatForDisplayTime("HH:mm");
+        timeSettings.generatePotentialMenuTimes(TimePickerSettings.TimeIncrement.FifteenMinutes, null, null);
+        timePickerHora = new TimePicker(timeSettings);
+        formPanel.add(timePickerHora, gbcF);
+
+        // Fila 3: Tipo (Izquierda) | Lugar (Derecha)
+        gbcF.gridy = 4; gbcF.gridx = 0; gbcF.insets = new Insets(15, 10, 5, 10);
+        formPanel.add(crearLabel("Tipo de evento *"), gbcF);
+        
+        gbcF.gridx = 1;
+        formPanel.add(crearLabel("Lugar"), gbcF);
+
+        gbcF.gridy = 5; gbcF.gridx = 0; gbcF.insets = new Insets(5, 10, 5, 10);
+        cbxTipo = new JComboBox<>(new String[]{"Seleccione un tipo...", "Académico", "Conferencia", "Social", "Empresarial", "Cultural", "Deportivo"});
+        cbxTipo.setBackground(new Color(25, 25, 25));
+        cbxTipo.setForeground(Color.WHITE);
+        formPanel.add(cbxTipo, gbcF);
+
+        gbcF.gridx = 1;
+        txtLugar = crearTextField();
+        txtLugar.putClientProperty("JTextField.placeholderText", "Ej. Auditorio Principal");
+        formPanel.add(txtLugar, gbcF);
+
+        // Fila 4: Descripción (Full Width)
+        gbcF.gridy = 6; gbcF.gridx = 0; gbcF.gridwidth = 2; gbcF.insets = new Insets(15, 10, 5, 10);
+        formPanel.add(crearLabel("Descripción del evento"), gbcF);
+
+        gbcF.gridy = 7; gbcF.gridx = 0; gbcF.gridwidth = 2; gbcF.insets = new Insets(5, 10, 20, 10);
+        txtDescripcion = new JTextArea(4, 20);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        txtDescripcion.setBackground(new Color(25, 25, 25));
+        txtDescripcion.setForeground(Color.WHITE);
+        JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
+        scrollDesc.setBorder(new LineBorder(new Color(60, 60, 60), 1, true));
+        formPanel.add(scrollDesc, gbcF);
+
+        // Panel de Botones (Sur del Formulario)
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        btnPanel.setBackground(new Color(35, 35, 35));
+
+        btnCrear = new JButton("+ Crear Evento");
+        btnCrear.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnCrear.setBackground(new Color(255, 117, 31)); // Naranja
+        btnCrear.setForeground(Color.WHITE);
+        btnCrear.setFocusPainted(false);
+        btnCrear.setBorder(new EmptyBorder(8, 20, 8, 20));
+
+        btnConsultar = new JButton("🔍 Consultar Evento");
+        btnConsultar.setBackground(new Color(25, 25, 25));
+        btnConsultar.setForeground(new Color(255, 117, 31));
+        btnConsultar.setBorder(new CompoundBorder(new LineBorder(new Color(255, 117, 31), 1, true), new EmptyBorder(8, 15, 8, 15)));
+
+        btnListar = new JButton("☷ Ver Todos los Eventos");
+        btnListar.setBackground(new Color(25, 25, 25));
+        btnListar.setForeground(new Color(255, 117, 31));
+        btnListar.setBorder(new CompoundBorder(new LineBorder(new Color(255, 117, 31), 1, true), new EmptyBorder(8, 15, 8, 15)));
+
+        btnPanel.add(btnCrear);
+        btnPanel.add(btnConsultar);
+        btnPanel.add(btnListar);
+
+        pnlFormWrapper.add(formPanel, BorderLayout.CENTER);
+        pnlFormWrapper.add(btnPanel, BorderLayout.SOUTH);
+
+        pnlCentro.add(pnlFormWrapper, gbcMain);
+
+        // --- DERECHA: PANEL VISUAL ---
+        gbcMain.gridx = 1; gbcMain.weightx = 0.35; gbcMain.insets = new Insets(0, 10, 0, 0);
+        JPanel pnlVisual = new JPanel(new BorderLayout());
+        pnlVisual.setBackground(new Color(20, 20, 20));
+        pnlVisual.setBorder(new CompoundBorder(
+                new LineBorder(new Color(50, 50, 50), 1, true),
+                new EmptyBorder(30, 20, 30, 20)
+        ));
+
+        // Textos Visuales
+        JPanel pnlVisText = new JPanel();
+        pnlVisText.setLayout(new BoxLayout(pnlVisText, BoxLayout.Y_AXIS));
+        pnlVisText.setBackground(new Color(20, 20, 20));
+
+        JLabel lblVit1 = new JLabel("Crea experiencias que conectan personas");
+        lblVit1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblVit1.setForeground(Color.WHITE);
+        
+        JLabel lblVit2 = new JLabel("<html><p style='color:#BBBBBB;'>Registra eventos académicos, culturales, empresariales y mucho más de forma rápida y sencilla.</p></html>");
+        lblVit2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        pnlVisText.add(lblVit1);
+        pnlVisText.add(Box.createRigidArea(new Dimension(0, 10)));
+        pnlVisText.add(lblVit2);
+        pnlVisText.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        // Tarjetas Visuales (Grid 2x2)
+        JPanel pnlTarjetas = new JPanel(new GridLayout(2, 2, 10, 10));
+        pnlTarjetas.setBackground(new Color(20, 20, 20));
+
+        pnlTarjetas.add(crearTarjetaMuestra("🎓 Académicos", "Conferencias, talleres."));
+        pnlTarjetas.add(crearTarjetaMuestra("👥 Sociales", "Encuentros, comunidades."));
+        pnlTarjetas.add(crearTarjetaMuestra("💼 Empresariales", "Capacitaciones, ferias."));
+        pnlTarjetas.add(crearTarjetaMuestra("⭐ Culturales", "Festivales, torneos."));
+
+        pnlVisText.add(pnlTarjetas);
+
+        pnlVisual.add(pnlVisText, BorderLayout.NORTH);
+
+        pnlCentro.add(pnlVisual, gbcMain);
+
+        mainPanel.add(pnlCentro, BorderLayout.CENTER);
+        
+        // El controller extrae mainPanel con getContentPane()
+        setContentPane(mainPanel);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnConsultar;
-    public javax.swing.JButton btnCrear;
-    public javax.swing.JComboBox<String> cbxTipo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JLabel lblLogo;
-    public javax.swing.JSpinner spnFecha;
-    public javax.swing.JSpinner spnHora;
-    private javax.swing.JTextArea txtDescripcion;
-    public javax.swing.JTextField txtId;
-    public javax.swing.JTextField txtLugar;
-    public javax.swing.JTextField txtNombre;
-    // End of variables declaration//GEN-END:variables
-public String getIdEvento() {
-    return txtId.getText();
-}
+    private JLabel crearLabel(String texto) {
+        JLabel label = new JLabel(texto);
+        label.setForeground(Color.LIGHT_GRAY);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        return label;
+    }
 
-public String getNombre() {
-    return txtNombre.getText();
-}
+    private JTextField crearTextField() {
+        JTextField textField = new JTextField();
+        textField.setBackground(new Color(25, 25, 25));
+        textField.setForeground(Color.WHITE);
+        textField.setCaretColor(Color.WHITE);
+        textField.setBorder(new CompoundBorder(
+                new LineBorder(new Color(60, 60, 60), 1, true),
+                new EmptyBorder(8, 10, 8, 10)
+        ));
+        return textField;
+    }
 
-public String getDescripcion() {
-    return txtDescripcion.getText();
-}
+    private JPanel crearTarjetaMuestra(String titulo, String subtitulo) {
+        JPanel pnl = new JPanel(new BorderLayout());
+        pnl.setBackground(new Color(30, 30, 30));
+        pnl.setBorder(new CompoundBorder(
+                new LineBorder(new Color(50, 50, 50), 1, true),
+                new EmptyBorder(15, 10, 15, 10)
+        ));
+        JLabel lblT = new JLabel(titulo);
+        lblT.setForeground(Color.WHITE);
+        lblT.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        
+        JLabel lblS = new JLabel("<html><p style='color:gray;'>" + subtitulo + "</p></html>");
+        lblS.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        
+        pnl.add(lblT, BorderLayout.NORTH);
+        pnl.add(lblS, BorderLayout.CENTER);
+        return pnl;
+    }
 
-public String getTipo() {
-    return cbxTipo.getSelectedItem().toString();
-}
-
-public java.util.Date getFecha() {
-    return (java.util.Date) spnFecha.getValue();
-}
-
-public java.util.Date getHora() {
-    return (java.util.Date) spnHora.getValue();
-}
-
-public String getLugar() {
-    return txtLugar.getText();
-}
-
-public void limpiarFormulario() {
-    txtId.setText("");
-    txtNombre.setText("");
-    txtDescripcion.setText("");
-    txtLugar.setText("");
-    cbxTipo.setSelectedIndex(0);
-}
-
-public javax.swing.JButton getBtnCrear() {
-    return btnCrear;
-}
-
-public javax.swing.JButton getBtnConsultar() {
-    return btnConsultar;
-}
-
-public void mostrarMensaje(String titulo, String mensaje, int tipoMensaje) {
-    javax.swing.JOptionPane.showMessageDialog(this, mensaje, titulo, tipoMensaje);
-}
-
-public void mostrarMensajeExito(String mensaje) {
-    mostrarMensaje("Éxito", mensaje, javax.swing.JOptionPane.INFORMATION_MESSAGE);
-}
-
-public void mostrarMensajeError(String mensaje) {
-    mostrarMensaje("Error", mensaje, javax.swing.JOptionPane.ERROR_MESSAGE);
-}
-
-public void mostrarMensajeAdvertencia(String mensaje) {
-    mostrarMensaje("Advertencia", mensaje, javax.swing.JOptionPane.WARNING_MESSAGE);
-}
+    // --- Getters y Setters requeridos por el Controlador ---
+    public JButton getBtnCrear() { return btnCrear; }
+    public JButton getBtnConsultar() { return btnConsultar; }
+    public JButton getBtnListar() { return btnListar; }
     
+    public String getIdEvento() { return txtId.getText(); }
+    public void setIdGenerado(String id) { txtId.setText(id); }
+    
+    public String getNombre() { return txtNombre.getText(); }
+    public String getDescripcion() { return txtDescripcion.getText(); }
+    
+    public String getTipo() { 
+        if(cbxTipo.getSelectedIndex() == 0) return "";
+        return cbxTipo.getSelectedItem().toString(); 
+    }
+    
+    public String getLugar() { return txtLugar.getText(); }
+    
+    public java.util.Date getFecha() { 
+        LocalDate ld = datePickerFecha.getDate();
+        if(ld == null) return null;
+        return java.util.Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    public void setFecha(java.util.Date date) { 
+        if(date != null) datePickerFecha.setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        else datePickerFecha.clear();
+    }
+    
+    public java.util.Date getHora() { 
+        LocalTime lt = timePickerHora.getTime();
+        if(lt == null) return null;
+        return java.util.Date.from(lt.atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant());
+    }
+    public void setHora(java.util.Date date) {
+        if(date != null) timePickerHora.setTime(date.toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
+        else timePickerHora.clear();
+    }
+
+    // --- Mensajes y Limpieza ---
+    public void limpiarFormulario() {
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        cbxTipo.setSelectedIndex(0);
+        txtLugar.setText("");
+        datePickerFecha.clear();
+        timePickerHora.clear();
+    }
+    
+    public void mostrarMensajeExito(String msj) {
+        JOptionPane.showMessageDialog(this, msj, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarMensajeAdvertencia(String msj) {
+        JOptionPane.showMessageDialog(this, msj, "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    public void mostrarMensajeError(String msj) {
+        JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }
