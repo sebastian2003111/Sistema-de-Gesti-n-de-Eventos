@@ -1,1 +1,38 @@
-/target/
+# Archivos compilados
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.log
+
+# Carpetas de construcción de Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Archivos específicos de Apache NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+# Base de datos SQLite local (para no subir datos reales al repositorio)
+gestion_eventos.db
+*.sqlite3
+*.db
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db

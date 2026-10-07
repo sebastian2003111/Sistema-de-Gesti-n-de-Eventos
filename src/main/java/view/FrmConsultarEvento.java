@@ -21,7 +21,7 @@ public class FrmConsultarEvento extends JFrame {
     public JButton btnVolver;
     
     private JLabel lblResultadoId;
-    private JLabel lblResultadoEstado;
+    private JComboBox<String> cbxResultadoEstado;
     
     private JTextField txtResultadoNombre;
     private JComboBox<String> cbxResultadoTipo;
@@ -38,6 +38,11 @@ public class FrmConsultarEvento extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar Evento");
         setBackground(new Color(25, 25, 25));
+        
+        try {
+            Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Logo_negro2.png"));
+            setIconImage(icon);
+        } catch (Exception e) {}
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -99,10 +104,11 @@ public class FrmConsultarEvento extends JFrame {
         formPanel.add(lblResultadoId, gbc);
         
         gbc.gridx = 1;
-        lblResultadoEstado = new JLabel("---");
-        lblResultadoEstado.setForeground(new Color(50, 205, 50)); // Verde
-        lblResultadoEstado.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        formPanel.add(lblResultadoEstado, gbc);
+        cbxResultadoEstado = new JComboBox<>(new String[]{"Programado", "En preparación", "En curso", "Finalizado", "Cancelado"});
+        cbxResultadoEstado.setBackground(new Color(25, 25, 25));
+        cbxResultadoEstado.setForeground(new Color(50, 205, 50)); // Verde
+        cbxResultadoEstado.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        formPanel.add(cbxResultadoEstado, gbc);
 
         // Fila 2: Nombre | Fecha
         gbc.gridy = 2; gbc.gridx = 0;
@@ -153,6 +159,8 @@ public class FrmConsultarEvento extends JFrame {
 
         gbc.gridy = 9; gbc.gridx = 0; gbc.gridwidth = 2;
         gbc.insets = new Insets(5, 10, 10, 10);
+        gbc.weighty = 1.0; // Permitir que se expanda verticalmente
+        gbc.fill = GridBagConstraints.BOTH;
         txtResultadoDescripcion = new JTextArea(4, 20);
         txtResultadoDescripcion.setLineWrap(true);
         txtResultadoDescripcion.setWrapStyleWord(true);
@@ -160,7 +168,12 @@ public class FrmConsultarEvento extends JFrame {
         txtResultadoDescripcion.setForeground(Color.WHITE);
         JScrollPane scrollDesc = new JScrollPane(txtResultadoDescripcion);
         scrollDesc.setBorder(new LineBorder(new Color(60, 60, 60), 1, true));
+        scrollDesc.setPreferredSize(new Dimension(0, 80)); // Forzar altura mínima
         formPanel.add(scrollDesc, gbc);
+        
+        // Restaurar valores para otros componentes si se añadieran más después (opcional)
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         mainPanel.add(formPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -228,7 +241,8 @@ public class FrmConsultarEvento extends JFrame {
     public String getIdConsulta() { return txtIdConsulta.getText(); }
     public String getResultadoId() { return lblResultadoId.getText(); }
     public void setResultadoId(String texto) { lblResultadoId.setText(texto); }
-    public void setResultadoEstado(String texto) { lblResultadoEstado.setText(texto); }
+    public String getResultadoEstado() { return cbxResultadoEstado.getSelectedItem() != null ? cbxResultadoEstado.getSelectedItem().toString() : ""; }
+    public void setResultadoEstado(String texto) { cbxResultadoEstado.setSelectedItem(texto); }
     
     public String getResultadoNombre() { return txtResultadoNombre.getText(); }
     public String getResultadoTipo() { return cbxResultadoTipo.getSelectedItem() != null ? cbxResultadoTipo.getSelectedItem().toString() : ""; }

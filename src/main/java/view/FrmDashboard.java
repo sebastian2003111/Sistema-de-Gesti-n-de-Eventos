@@ -37,6 +37,11 @@ public class FrmDashboard extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        try {
+            Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Logo_negro2.png"));
+            setIconImage(icon);
+        } catch (Exception e) {}
+
         // Colores base (FlatLaf se encarga de mucho, pero aseguramos la marca)
         Color colorSidebar = new Color(25, 25, 25);
         

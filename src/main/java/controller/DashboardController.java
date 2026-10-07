@@ -125,10 +125,13 @@ public class DashboardController {
         if (usuarioActual != null) {
             int resp = javax.swing.JOptionPane.showConfirmDialog(vistaDashboard, "¿Estás seguro que deseas cerrar sesión?", "Cerrar Sesión", javax.swing.JOptionPane.YES_NO_OPTION);
             if (resp == javax.swing.JOptionPane.YES_OPTION) {
-                abrirLogin();
+                // Reiniciar el dashboard en modo invitado
+                vistaDashboard.dispose();
+                view.FrmDashboard nuevaVista = new view.FrmDashboard();
+                DashboardController nuevoControlador = new DashboardController(nuevaVista, null);
             }
         } else {
-            abrirLogin();
+            abrirLogin(); // Si ya es invitado, este botón dice "Iniciar Sesión"
         }
     }
 

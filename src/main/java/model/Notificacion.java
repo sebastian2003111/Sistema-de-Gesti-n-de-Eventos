@@ -22,6 +22,7 @@ public class Notificacion {
     public String getTitulo() { return titulo; }
     public String getMensaje() { return mensaje; }
     public String getFechaHora() { return fechaHora; }
+    public void setFechaHora(String fechaHora) { this.fechaHora = fechaHora; }
     public boolean isLeida() { return leida; }
     public void marcarComoLeida() { this.leida = true; }
 }

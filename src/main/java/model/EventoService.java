@@ -23,7 +23,7 @@ public class EventoService {
         if (lugar == null || lugar.trim().isEmpty()) {
             throw new IllegalArgumentException("El lugar es obligatorio.");
         }
-        if (tipo == null || tipo.equals("Seleccione...")) {
+        if (tipo == null || tipo.trim().isEmpty() || tipo.startsWith("Seleccione")) {
             throw new IllegalArgumentException("¡Oops! Has olvidado indicarnos qué tipo de evento es. Por favor, selecciona una opción válida de la lista desplegable antes de continuar.");
         }
 

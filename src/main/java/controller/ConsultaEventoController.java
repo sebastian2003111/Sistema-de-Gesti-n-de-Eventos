@@ -134,8 +134,9 @@ public class ConsultaEventoController {
                 return;
             }
 
-            // Consultamos el evento actual para obtener su estado u otros datos no modificables
+            // Consultamos el evento actual
             Evento eventoExistente = servicio.consultarEvento(idTexto);
+            String estadoNuevo = vistaConsulta.getResultadoEstado();
             
             // Confirmación antes de actualizar
             int confirm = javax.swing.JOptionPane.showConfirmDialog(vistaConsulta,
@@ -145,7 +146,7 @@ public class ConsultaEventoController {
                     javax.swing.JOptionPane.QUESTION_MESSAGE);
                     
             if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-                servicio.actualizarEvento(idTexto, nombre, descripcion, tipo, lugar, dateFecha, dateHora, eventoExistente.getEstado());
+                servicio.actualizarEvento(idTexto, nombre, descripcion, tipo, lugar, dateFecha, dateHora, estadoNuevo);
                 javax.swing.JOptionPane.showMessageDialog(vistaConsulta, "¡Datos actualizados con éxito!");
             }
             

@@ -54,6 +54,14 @@ public class FrmLogin extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Cambiar el icono de la ventana
+        try {
+            Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Logo_negro2.png"));
+            setIconImage(icon);
+        } catch (Exception e) {
+            System.err.println("No se pudo cargar el icono: " + e.getMessage());
+        }
+
         JPanel panelIzquierdo = crearPanelIzquierdo();
         add(panelIzquierdo, BorderLayout.WEST);
 
