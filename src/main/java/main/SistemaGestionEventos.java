@@ -8,24 +8,24 @@ public class SistemaGestionEventos {
 
     public static void main(String[] args) {
 
-        // Configurar colores globales para los cuadros de diálogo (JOptionPane)
-        javax.swing.UIManager.put("OptionPane.background", new java.awt.Color(51, 51, 51));
-        javax.swing.UIManager.put("Panel.background", new java.awt.Color(51, 51, 51));
-        javax.swing.UIManager.put("OptionPane.messageForeground", new java.awt.Color(255, 255, 255));
-        javax.swing.UIManager.put("Button.background", new java.awt.Color(255, 117, 31));
-        javax.swing.UIManager.put("Button.foreground", new java.awt.Color(255, 255, 255));
-        javax.swing.UIManager.put("Button.font", new java.awt.Font("Arial Black", 0, 12));
+        // Configurar FlatLaf (Tema Oscuro Moderno)
+        try {
+            com.formdev.flatlaf.FlatDarkLaf.setup();
+            
+            // Soporte para Emojis nativo de Windows (Evita los cuadritos)
+            javax.swing.UIManager.put("defaultFont", new java.awt.Font("Segoe UI Emoji", java.awt.Font.PLAIN, 14));
 
-        FrmEvento vista = new FrmEvento();
+            // Personalizar algunos colores de FlatLaf para que coincidan con tu marca
+            javax.swing.UIManager.put("Button.arc", 10); // Botones redondeados
+            javax.swing.UIManager.put("Component.arc", 10); // Campos de texto redondeados
+            javax.swing.UIManager.put("Button.background", new java.awt.Color(255, 117, 31)); // Naranja
+            javax.swing.UIManager.put("Button.foreground", java.awt.Color.WHITE);
+        } catch (Exception ex) {
+            System.err.println("Error al inicializar FlatLaf");
+        }
 
-        model.IEventoRepository repository = new model.EventoRepository();
-        EventoService servicio = new EventoService(repository);
-
-        EventoController controlador =
-                new EventoController(vista, servicio);
-
-        controlador.iniciar();
-
-        vista.setVisible(true);
+        // Inicializar Dashboard en modo Invitado
+        view.FrmDashboard vistaDashboard = new view.FrmDashboard();
+        controller.DashboardController dashboardController = new controller.DashboardController(vistaDashboard, null); // null = Modo Invitado
     }
 }

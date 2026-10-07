@@ -4,10 +4,6 @@ import model.Evento;
 import model.EventoService;
 import view.FrmConsultarEvento;
 import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
-import java.util.Date;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 
 public class ConsultaEventoController {
 
@@ -18,30 +14,35 @@ public class ConsultaEventoController {
         this.vistaConsulta = vistaConsulta;
         this.servicio = servicio;
 
-        // Listeners existentes
+        // Listener existente para el botón buscar
         this.vistaConsulta.btnBuscar.addActionListener(e -> buscarEvento());
+        
+        // NUEVO: Listener para el botón volver
+        // (Asegúrate de que en NetBeans el botón se llame "btnVolver" y sea "public")
         this.vistaConsulta.btnVolver.addActionListener(e -> volver());
         
-        // Listener para actualizar
-        this.vistaConsulta.btnActualizar.addActionListener(e -> actualizarEvento());
+        // Listener para el botón actualizar
+        this.vistaConsulta.getBtnActualizar().addActionListener(e -> actualizarEvento());
+        
+        // Listener para el botón eliminar
+        this.vistaConsulta.getBtnEliminar().addActionListener(e -> eliminarEvento());
+    }
+
+    private model.Usuario usuarioActual;
+
+    public void setUsuarioActual(model.Usuario usuario) {
+        this.usuarioActual = usuario;
+        
+        // A petición del cliente, los usuarios comunes ahora pueden actualizar y eliminar eventos.
+        // Los permisos especiales de administrador se reservarán para otros módulos (ej. Configuración, Informes).
+        this.vistaConsulta.getBtnEliminar().setEnabled(true);
+        this.vistaConsulta.getBtnActualizar().setEnabled(true);
     }
 
     public void iniciar() {
         vistaConsulta.setTitle("Consultar Evento");
         vistaConsulta.setLocationRelativeTo(null);
         vistaConsulta.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        
-        // Configurar el modelo interno de los Spinners para que sean tipo Fecha/Hora
-        vistaConsulta.spnResultadoFecha.setModel(new SpinnerDateModel());
-        vistaConsulta.spnResultadoHora.setModel(new SpinnerDateModel());
-
-        // Darle formato visual al Spinner de Fecha (Día/Mes/Año)
-        JSpinner.DateEditor editorFecha = new JSpinner.DateEditor(vistaConsulta.spnResultadoFecha, "dd/MM/yyyy");
-        vistaConsulta.spnResultadoFecha.setEditor(editorFecha);
-
-        // Darle formato visual al Spinner de Hora (Formato 24 horas)
-        JSpinner.DateEditor editorHora = new JSpinner.DateEditor(vistaConsulta.spnResultadoHora, "HH:mm");
-        vistaConsulta.spnResultadoHora.setEditor(editorHora);
     }
 
     private void buscarEvento() {
@@ -54,14 +55,17 @@ public class ConsultaEventoController {
             vistaConsulta.setResultadoNombre(evento.getNombre());
             vistaConsulta.setResultadoTipo(evento.getTipo());
             
+            // Formatear la fecha y hora de forma correcta
             if (evento.getFecha() != null) {
-                Date dateFecha = Date.from(evento.getFecha().atStartOfDay(ZoneId.systemDefault()).toInstant());
-                vistaConsulta.setResultadoFecha(dateFecha);
+                vistaConsulta.setResultadoFecha(evento.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            } else {
+                vistaConsulta.setResultadoFecha("");
             }
 
             if (evento.getHora() != null) {
-                Date dateHora = Date.from(evento.getHora().atDate(evento.getFecha()).atZone(ZoneId.systemDefault()).toInstant());
-                vistaConsulta.setResultadoHora(dateHora);
+                vistaConsulta.setResultadoHora(evento.getHora().format(DateTimeFormatter.ofPattern("HH:mm")));
+            } else {
+                vistaConsulta.setResultadoHora("");
             }
             
             vistaConsulta.setResultadoLugar(evento.getLugar());
@@ -69,6 +73,7 @@ public class ConsultaEventoController {
             vistaConsulta.setResultadoEstado(evento.getEstado());
 
         } catch (IllegalArgumentException ex) {
+            // Mostrar errores de validación (por ejemplo, no encontrado)
             vistaConsulta.mostrarMensajeAdvertencia(ex.getMessage());
             limpiarResultados();
         } catch (Exception ex) {
@@ -77,56 +82,110 @@ public class ConsultaEventoController {
         }
     }
     
+    private void limpiarResultados() {
+        vistaConsulta.setResultadoId("---");
+        vistaConsulta.setResultadoNombre("");
+        vistaConsulta.setResultadoTipo("Seleccione...");
+        vistaConsulta.setResultadoFecha("");
+        vistaConsulta.setResultadoHora("");
+        vistaConsulta.setResultadoLugar("");
+        vistaConsulta.setResultadoDescripcion("");
+        vistaConsulta.setResultadoEstado("");
+    }
+    
+    // NUEVO: Método para cerrar la ventana y volver a la principal
+    private void volver() {
+        vistaConsulta.dispose();
+    }
+    
     private void actualizarEvento() {
+        if (usuarioActual == null) {
+            vistaConsulta.mostrarMensajeAdvertencia("Debes iniciar sesión para actualizar eventos.");
+            return;
+        }
         try {
-            String idTexto = vistaConsulta.getIdConsulta();
-            if (idTexto == null || idTexto.trim().isEmpty()) {
-                throw new IllegalArgumentException("Debe buscar un evento primero.");
-            }
-            
-            // Confirmación antes de actualizar
-            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-                    vistaConsulta, 
-                    "¿Está seguro de que desea actualizar los datos de este evento?", 
-                    "Confirmar Actualización", 
-                    javax.swing.JOptionPane.YES_NO_OPTION,
-                    javax.swing.JOptionPane.QUESTION_MESSAGE
-            );
-
-            if (confirmacion != javax.swing.JOptionPane.YES_OPTION) {
-                return; // Acción cancelada por el usuario
+            String idTexto = vistaConsulta.getResultadoId();
+            if (idTexto == null || idTexto.trim().isEmpty() || idTexto.equals("---")) {
+                vistaConsulta.mostrarMensajeAdvertencia("Primero debe consultar un evento válido para actualizar.");
+                return;
             }
             
             String nombre = vistaConsulta.getResultadoNombre();
             String descripcion = vistaConsulta.getResultadoDescripcion();
             String tipo = vistaConsulta.getResultadoTipo();
             String lugar = vistaConsulta.getResultadoLugar();
-            Date fecha = vistaConsulta.getResultadoFecha();
-            Date hora = vistaConsulta.getResultadoHora();
+            
+            String fechaStr = vistaConsulta.getResultadoFecha();
+            String horaStr = vistaConsulta.getResultadoHora();
+            
+            // Parsear las fechas ingresadas en texto
+            java.util.Date dateFecha = null;
+            java.util.Date dateHora = null;
+            
+            try {
+                if (fechaStr != null && !fechaStr.trim().isEmpty()) {
+                    dateFecha = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(fechaStr);
+                }
+                if (horaStr != null && !horaStr.trim().isEmpty()) {
+                    dateHora = new java.text.SimpleDateFormat("HH:mm").parse(horaStr);
+                }
+            } catch (java.text.ParseException e) {
+                vistaConsulta.mostrarMensajeAdvertencia("Formato de fecha u hora incorrecto. Use dd/MM/yyyy y HH:mm");
+                return;
+            }
 
-            servicio.actualizarEvento(idTexto, nombre, descripcion, tipo, lugar, fecha, hora);
+            // Consultamos el evento actual para obtener su estado u otros datos no modificables
+            Evento eventoExistente = servicio.consultarEvento(idTexto);
+            
+            // Confirmación antes de actualizar
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(vistaConsulta,
+                    "¿Estás seguro de que deseas guardar los cambios realizados en el evento '" + nombre + "'?",
+                    "Confirmar Actualización",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.QUESTION_MESSAGE);
+                    
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                servicio.actualizarEvento(idTexto, nombre, descripcion, tipo, lugar, dateFecha, dateHora, eventoExistente.getEstado());
+                javax.swing.JOptionPane.showMessageDialog(vistaConsulta, "¡Datos actualizados con éxito!");
+            }
+            
+        } catch (IllegalArgumentException ex) {
+            vistaConsulta.mostrarMensajeAdvertencia(ex.getMessage());
+        } catch (Exception ex) {
+            vistaConsulta.mostrarMensajeError("Ocurrió un error al intentar actualizar: " + ex.getMessage());
+        }
+    }
 
-            vistaConsulta.mostrarMensajeAdvertencia("¡Evento actualizado con éxito!");
+    private void eliminarEvento() {
+        if (usuarioActual == null) {
+            vistaConsulta.mostrarMensajeAdvertencia("Debes iniciar sesión para eliminar eventos.");
+            return;
+        }
+        try {
+            String idTexto = vistaConsulta.getResultadoId();
+            if (idTexto == null || idTexto.trim().isEmpty() || idTexto.equals("---")) {
+                vistaConsulta.mostrarMensajeAdvertencia("Primero debe consultar un evento válido para eliminar.");
+                return;
+            }
+
+            String nombre = vistaConsulta.getResultadoNombre(); // Capturamos el nombre para el mensaje
+            
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(vistaConsulta,
+                    "¿Estás seguro de que deseas eliminar permanentemente el evento '" + nombre + "'?\nEsta acción no se puede deshacer.",
+                    "Confirmar Eliminación",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                servicio.eliminarEvento(idTexto);
+                javax.swing.JOptionPane.showMessageDialog(vistaConsulta, "¡Evento eliminado con éxito!");
+                limpiarResultados();
+            }
 
         } catch (IllegalArgumentException ex) {
             vistaConsulta.mostrarMensajeAdvertencia(ex.getMessage());
         } catch (Exception ex) {
-            vistaConsulta.mostrarMensajeError("Ocurrió un error inesperado: " + ex.getMessage());
+            vistaConsulta.mostrarMensajeError("Ocurrió un error al intentar eliminar: " + ex.getMessage());
         }
-    }
-    
-    private void limpiarResultados() {
-        vistaConsulta.setResultadoId("");
-        vistaConsulta.setResultadoNombre("");
-        vistaConsulta.setResultadoTipo("Seleccione...");
-        vistaConsulta.setResultadoFecha(new Date());
-        vistaConsulta.setResultadoHora(new Date());
-        vistaConsulta.setResultadoLugar("");
-        vistaConsulta.setResultadoDescripcion("");
-        vistaConsulta.setResultadoEstado("");
-    }
-    
-    private void volver() {
-        vistaConsulta.dispose();
     }
 }

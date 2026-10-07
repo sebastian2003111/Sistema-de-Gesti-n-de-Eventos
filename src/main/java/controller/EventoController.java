@@ -12,6 +12,7 @@ public class EventoController {
 
     private final FrmEvento vista;
     private final EventoService servicio;
+    private model.Usuario usuarioActual;
 
     public EventoController(FrmEvento vista, EventoService servicio) {
         this.vista = vista;
@@ -20,35 +21,32 @@ public class EventoController {
         // Binding events directly to methods using lambdas (OCP)
         this.vista.getBtnCrear().addActionListener(e -> crearEvento());
         this.vista.getBtnConsultar().addActionListener(e -> consultarEvento());
+        this.vista.btnListar.addActionListener(e -> listarEventos());
+    }
+
+    public void setUsuarioActual(model.Usuario usuario) {
+        this.usuarioActual = usuario;
     }
 
     public void iniciar() {
         vista.setTitle("Sistema de Gestión de Eventos");
         vista.setLocationRelativeTo(null);
-
-        // --- Configurar campo de ID (bloqueado, autogenerado) ---
-        vista.txtId.setEditable(false);
-        vista.txtId.setText("Automático");
-        // --------------------------------------------------------
-
-        // 1. Configurar el modelo interno de los Spinners para que sean tipo Fecha/Hora
-        vista.spnFecha.setModel(new SpinnerDateModel());
-        vista.spnHora.setModel(new SpinnerDateModel());
-
-        // 2. Darle formato visual al Spinner de Fecha (Día/Mes/Año)
-        JSpinner.DateEditor editorFecha =
-                new JSpinner.DateEditor(vista.spnFecha, "dd/MM/yyyy");
-        vista.spnFecha.setEditor(editorFecha);
-
-        // 3. Darle formato visual al Spinner de Hora (Formato 24 horas)
-        JSpinner.DateEditor editorHora =
-                new JSpinner.DateEditor(vista.spnHora, "HH:mm");
-        vista.spnHora.setEditor(editorHora);
+        
+        // Configuramos la fecha y hora actual por defecto en los nuevos DatePickers
+        vista.setFecha(new java.util.Date());
+        vista.setHora(new java.util.Date());
+        
+        vista.setIdGenerado(String.valueOf(servicio.obtenerSiguienteId()));
     }
 
     private void crearEvento() {
+        if (usuarioActual == null) {
+            vista.mostrarMensajeAdvertencia("Debes iniciar sesión para registrar eventos.");
+            return;
+        }
         try {
             // Capturar datos usando los getters de la vista
+            String idTexto = vista.getIdEvento();
             String nombre = vista.getNombre();
             String descripcion = vista.getDescripcion();
             String tipo = vista.getTipo();
@@ -56,17 +54,23 @@ public class EventoController {
             java.util.Date fecha = vista.getFecha();
             java.util.Date hora = vista.getHora();
 
-            // Delegar la lógica de creación al servicio (que autogenera el ID)
-            int nuevoId = servicio.crearEvento(nombre, descripcion, tipo, lugar, fecha, hora);
+            // Delegar la lógica de creación al servicio
+            servicio.crearEvento(idTexto, nombre, descripcion, tipo, lugar, fecha, hora);
+
+            // Crear notificación
+            model.NotificacionRepository.getInstance().agregar(
+                "Nuevo Evento", 
+                "El evento '" + nombre + "' fue creado exitosamente."
+            );
 
             // Mostrar mensaje de éxito a través de la vista
             vista.mostrarMensajeExito("¡Evento registrado con éxito!\n\n"
-                    + "ID: " + nuevoId + "\n"
+                    + "ID: " + idTexto + "\n"
                     + "Nombre: " + nombre + "\n"
                     + "Tipo: " + tipo);
 
             vista.limpiarFormulario();
-            vista.txtId.setText("Automático");
+            vista.setIdGenerado(String.valueOf(servicio.obtenerSiguienteId()));
 
         } catch (IllegalArgumentException ex) {
             // Mostrar mensajes de error de validación
@@ -81,9 +85,16 @@ public class EventoController {
 
     ConsultaEventoController controladorConsulta =
             new ConsultaEventoController(vistaConsulta, servicio);
+    controladorConsulta.setUsuarioActual(usuarioActual);
 
     controladorConsulta.iniciar();
 
     vistaConsulta.setVisible(true);
 }
+
+    private void listarEventos() {
+        view.FrmListarEventos vistaListar = new view.FrmListarEventos();
+        controller.ListarEventosController controladorListar = new controller.ListarEventosController(vistaListar, servicio);
+        controladorListar.iniciar();
+    }
 }
