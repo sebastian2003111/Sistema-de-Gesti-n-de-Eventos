@@ -332,14 +332,14 @@ public class FrmEvento extends JFrame {
     }
     
     public void mostrarMensajeExito(String msj) {
-        JOptionPane.showMessageDialog(this, msj, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, msj, "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void mostrarMensajeAdvertencia(String msj) {
-        JOptionPane.showMessageDialog(this, msj, "Advertencia", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, msj, "Advertencia", JOptionPane.WARNING_MESSAGE);
     }
     
     public void mostrarMensajeError(String msj) {
-        JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

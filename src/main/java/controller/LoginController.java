@@ -24,6 +24,16 @@ public class LoginController {
             public void mouseEntered(java.awt.event.MouseEvent e) { vistaLogin.getLblIrARegistro().setForeground(new java.awt.Color(255, 117, 31)); }
             public void mouseExited(java.awt.event.MouseEvent e) { vistaLogin.getLblIrARegistro().setForeground(new java.awt.Color(150, 150, 150)); }
         });
+        
+        // Volver al Inicio (Modo Invitado)
+        this.vistaLogin.lblVolverInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                vistaLogin.dispose();
+                iniciarAppPrincipal(null); // null = Modo Invitado
+            }
+            public void mouseEntered(java.awt.event.MouseEvent e) { vistaLogin.lblVolverInicio.setForeground(new java.awt.Color(255, 117, 31)); }
+            public void mouseExited(java.awt.event.MouseEvent e) { vistaLogin.lblVolverInicio.setForeground(new java.awt.Color(100, 150, 255)); }
+        });
 
         // Register Actions
         this.vistaLogin.getBtnRegistrar().addActionListener(e -> registrarNuevoUsuario());

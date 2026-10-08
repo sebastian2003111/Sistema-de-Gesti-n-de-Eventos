@@ -243,6 +243,7 @@ public class FrmConsultarEvento extends JFrame {
     public void setResultadoId(String texto) { lblResultadoId.setText(texto); }
     public String getResultadoEstado() { return cbxResultadoEstado.getSelectedItem() != null ? cbxResultadoEstado.getSelectedItem().toString() : ""; }
     public void setResultadoEstado(String texto) { cbxResultadoEstado.setSelectedItem(texto); }
+    public JComboBox<String> getCbxResultadoEstado() { return cbxResultadoEstado; }
     
     public String getResultadoNombre() { return txtResultadoNombre.getText(); }
     public String getResultadoTipo() { return cbxResultadoTipo.getSelectedItem() != null ? cbxResultadoTipo.getSelectedItem().toString() : ""; }

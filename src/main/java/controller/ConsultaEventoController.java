@@ -37,6 +37,13 @@ public class ConsultaEventoController {
         // Los permisos especiales de administrador se reservarán para otros módulos (ej. Configuración, Informes).
         this.vistaConsulta.getBtnEliminar().setEnabled(true);
         this.vistaConsulta.getBtnActualizar().setEnabled(true);
+        
+        // SOLO el Administrador puede cambiar el ESTADO del evento
+        if (usuario != null && usuario.getRol().equals("Administrador")) {
+            this.vistaConsulta.getCbxResultadoEstado().setEnabled(true);
+        } else {
+            this.vistaConsulta.getCbxResultadoEstado().setEnabled(false);
+        }
     }
 
     public void iniciar() {
@@ -148,6 +155,14 @@ public class ConsultaEventoController {
             if (confirm == javax.swing.JOptionPane.YES_OPTION) {
                 servicio.actualizarEvento(idTexto, nombre, descripcion, tipo, lugar, dateFecha, dateHora, estadoNuevo);
                 javax.swing.JOptionPane.showMessageDialog(vistaConsulta, "¡Datos actualizados con éxito!");
+                
+                // NUEVO: Notificar si el estado cambió
+                if (!eventoExistente.getEstado().equals(estadoNuevo)) {
+                     model.NotificacionRepository.getInstance().agregar(
+                        "Estado Actualizado", 
+                        "El Administrador ha cambiado el estado del evento '" + nombre + "' a: " + estadoNuevo
+                    );
+                }
             }
             
         } catch (IllegalArgumentException ex) {

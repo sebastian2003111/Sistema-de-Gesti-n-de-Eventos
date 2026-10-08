@@ -24,6 +24,7 @@ public class FrmLogin extends JFrame {
     private JPasswordField txtRegConfirmPassword;
     private JButton btnRegistrar;
     private JLabel lblIrALogin;
+    public JLabel lblVolverInicio;
     private JToggleButton btnRegMostrarPass;
     private JToggleButton btnRegMostrarConfirmPass;
     private JLabel lblRegRequisitosPass;
@@ -184,8 +185,15 @@ public class FrmLogin extends JFrame {
         lblIrARegistro.setForeground(colorTextoGris);
         lblIrARegistro.setHorizontalAlignment(SwingConstants.CENTER);
         lblIrARegistro.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        gbc.gridy = 6; gbc.insets = new Insets(0, 60, 20, 60);
+        gbc.gridy = 6; gbc.insets = new Insets(0, 60, 10, 60);
         panel.add(lblIrARegistro, gbc);
+
+        lblVolverInicio = new JLabel("← Volver al Inicio (Modo Invitado)");
+        lblVolverInicio.setForeground(new Color(100, 150, 255));
+        lblVolverInicio.setHorizontalAlignment(SwingConstants.CENTER);
+        lblVolverInicio.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        gbc.gridy = 7; gbc.insets = new Insets(0, 60, 20, 60);
+        panel.add(lblVolverInicio, gbc);
 
         return panel;
     }
