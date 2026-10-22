@@ -1,0 +1,113 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset="utf-8"><title>Documentación de Funcionalidades</title>
+<style>
+body { font-family: 'Calibri', sans-serif; }
+h1 { color: #2E74B5; border-bottom: 2px solid #2E74B5; padding-bottom: 5px; }
+h2 { color: #F57F20; margin-top: 20px; }
+h3 { color: #444444; }
+ul { margin-bottom: 15px; }
+li { margin-bottom: 5px; }
+.advertencia { background-color: #FFF2CC; border-left: 4px solid #FFC000; padding: 10px; margin-top: 5px; font-style: italic; }
+.exito { background-color: #E2EFDA; border-left: 4px solid #70AD47; padding: 10px; margin-top: 5px; font-style: italic; }
+.error { background-color: #FCE4D6; border-left: 4px solid #ED7D31; padding: 10px; margin-top: 5px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Sistema de Gestión de Eventos - Documentación de Funcionalidades</h1>
+<p>Este documento detalla todas las funcionalidades implementadas en el sistema, organizadas por módulo, así como los controles, validaciones y advertencias programadas para garantizar la calidad del software.</p>
+
+<h2>1. Módulo de Autenticación y Seguridad</h2>
+<ul>
+    <li><b>Inicio de Sesión (Login):</b> Acceso mediante correo electrónico y contraseña.</li>
+    <li><b>Registro de Usuarios:</b> Creación de cuentas con asignación de rol (Administrador u Operador).</li>
+    <li><b>Modo Invitado:</b> Acceso restringido (solo lectura) al dashboard inicial sin necesidad de cuenta.</li>
+    <li><b>Navegación Segura:</b> Posibilidad de volver al menú inicial (Invitado) o cerrar sesión sin cerrar completamente el programa.</li>
+</ul>
+<div class="advertencia"><b>Advertencias y Validaciones:</b> 
+    <ul>
+        <li>El sistema exige una contraseña robusta (Mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo). Muestra indicadores de color (verde/gris) en tiempo real.</li>
+        <li>Bloquea el registro si las contraseñas no coinciden, mostrando: <i>"Las contraseñas no coinciden. Por favor, verifícalas."</i></li>
+        <li>Impide iniciar sesión con credenciales incorrectas, alertando: <i>"Correo no registrado"</i> o <i>"Contraseña incorrecta"</i>.</li>
+    </ul>
+</div>
+
+<h2>2. Módulo de Gestión de Eventos (CRUD)</h2>
+<ul>
+    <li><b>Creación de Eventos:</b> Formulario para registrar ID, Nombre, Descripción, Tipo, Lugar, Fecha y Hora.</li>
+    <li><b>Consulta de Eventos:</b> Búsqueda por ID para cargar y visualizar los datos del evento en pantalla.</li>
+    <li><b>Actualización de Datos:</b> Modificación de campos (lugar, nombre, fechas).</li>
+    <li><b>Actualización de Estado (Jerárquica):</b> Solo el Administrador puede cambiar el estado a "En Curso", "Finalizado" o "Cancelado". Para el Operador, este campo permanece bloqueado de fábrica.</li>
+    <li><b>Eliminación de Eventos:</b> Borrado permanente de la base de datos (Requiere confirmación).</li>
+    <li><b>Listado Tabular:</b> Visualización de todos los eventos registrados en una tabla resumen.</li>
+</ul>
+<div class="advertencia"><b>Advertencias y Validaciones:</b> 
+    <ul>
+        <li>Al crear: <i>"El ID es obligatorio"</i> / <i>"El nombre es obligatorio"</i> / <i>"El lugar es obligatorio"</i>.</li>
+        <li>Al crear: Evita tipos no seleccionados: <i>"¡Oops! Has olvidado indicarnos qué tipo de evento es. Por favor, selecciona una opción válida..."</i></li>
+        <li>Al crear/actualizar: Protege la integridad del ID alertando: <i>"Ya existe un evento registrado con el ID..."</i>.</li>
+        <li>Al actualizar/eliminar: Si el usuario es un invitado, lanza la alerta: <i>"Debes iniciar sesión para [eliminar/actualizar] eventos."</i></li>
+        <li>Al actualizar/eliminar: Si no hay evento consultado, alerta: <i>"Primero debe consultar un evento válido para [actualizar/eliminar]."</i></li>
+        <li>Mensaje de Confirmación (Prevención de desastres): <i>"¿Estás seguro de que deseas eliminar permanentemente el evento...? Esta acción no se puede deshacer."</i></li>
+    </ul>
+</div>
+
+<h2>3. Módulo de Calendario</h2>
+<ul>
+    <li><b>Cuadrícula Mensual Visual:</b> Renderizado de un calendario gráfico estándar de 35 cuadros.</li>
+    <li><b>Mapeo Automático:</b> Lectura de la base de datos para inyectar automáticamente los nombres de los eventos en el día correspondiente al mes actual.</li>
+</ul>
+
+<h2>4. Módulo de Participantes</h2>
+<ul>
+    <li><b>Inscripción de Asistentes:</b> Formulario de captura de Nombre y Correo del participante.</li>
+    <li><b>Vinculación de Asistencia:</b> Lista desplegable dinámica que extrae los eventos de la base de datos para asignar al participante al evento correcto.</li>
+    <li><b>Registro Tabular:</b> Tabla que muestra el historial de inscritos.</li>
+</ul>
+<div class="advertencia"><b>Advertencias y Validaciones:</b>
+    <ul>
+        <li>Alerta de campos obligatorios: <i>"Por favor, completa todos los campos para registrar al participante."</i></li>
+    </ul>
+</div>
+
+<h2>5. Módulo Logístico (Recursos y Cronograma)</h2>
+<ul>
+    <li><b>Gestión de Cronograma (Actividades):</b> Formulario para registrar la hora de inicio, nombre de la actividad y el miembro del staff responsable de dicha actividad durante el evento.</li>
+    <li><b>Gestión de Inventario (Recursos):</b> Captura de implementos físicos necesarios (ej. Sillas, Proyectores) y su cantidad.</li>
+    <li><b>Tablas Independientes:</b> Visualización separada del cronograma y del inventario dentro del mismo panel.</li>
+</ul>
+<div class="advertencia"><b>Advertencias y Validaciones:</b>
+    <ul>
+        <li>Verificación de vacíos: <i>"Por favor, completa todos los campos de la actividad/recurso."</i></li>
+    </ul>
+</div>
+
+<h2>6. Módulo de Informes Estadísticos (Dashboard Analítico)</h2>
+<ul>
+    <li><b>Tarjetas KPI en Tiempo Real:</b> Cálculo automático del Total de Eventos, Eventos Activos (Programados + En Curso) y Eventos Finalizados.</li>
+    <li><b>Gráficas de Distribución por Estado:</b> Barras porcentuales que muestran el volumen de eventos según su estado (Programado, En curso, Finalizado, Cancelado).</li>
+    <li><b>Gráficas de Distribución por Tipo:</b> Barras porcentuales dinámicas que categorizan los eventos según su temática (Académico, Deportivo, Musical, etc.).</li>
+</ul>
+
+<h2>7. Módulo de Notificaciones y Auditoría</h2>
+<ul>
+    <li><b>Bandeja de Entrada Interna:</b> Registro cronológico de acciones importantes para el equipo.</li>
+    <li><b>Alerta de Creación Automática:</b> Al registrar exitosamente un evento, el sistema notifica en segundo plano.</li>
+    <li><b>Alerta de Cambio de Estado:</b> Sistema de auditoría que notifica automáticamente cuando el Administrador decide cambiar el estado operativo de un evento.</li>
+</ul>
+<div class="exito"><b>Ejemplos de Notificaciones Generadas:</b>
+    <ul>
+        <li><i>"Nuevo Evento Creado: Se ha registrado el evento 'Conferencia Anual' en la plataforma."</i></li>
+        <li><i>"Estado Actualizado: El Administrador ha cambiado el estado del evento 'Torneo' a: En Curso"</i></li>
+    </ul>
+</div>
+
+<h2>8. Funcionalidades Transversales e Infraestructura</h2>
+<ul>
+    <li><b>Persistencia de Datos:</b> Integración con base de datos embebida SQLite con autogeneración de tablas.</li>
+    <li><b>Testing QA (Pruebas Unitarias):</b> Suite de pruebas automatizadas con JUnit 5 aplicadas al servicio lógico de los eventos.</li>
+    <li><b>SPA (Single Page Application):</b> Arquitectura de navegación sin apertura múltiple de ventanas usando <i>CardLayout</i> de Java Swing.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+1. 👑 Administrador (Acceso Total)
+
+Es el usuario de mayor jerarquía (dueño o gerente de la empresa de eventos).
+
+Credenciales por defecto: admin@admin.com / admin123 (debe registrarse con terminación @admin.com).
+Privilegios exclusivos:
+Cambio de Estado de Eventos: Es el único autorizado para cambiar el estado de un evento (de Programado a En proceso, Finalizado o Cancelado).
+Copias de Seguridad (Backup & Restore): Es el único que puede generar y restaurar respaldos de la base de datos SQLite en Configuración.
+Control total para crear, editar, listar y eliminar eventos, participantes, actividades y recursos.
+2. 👷 Operador / Colaborador (Acceso Operativo)
+
+Es el personal operativo o de staff encargado del día a día del evento.
+
+Credenciales por defecto: operador@gmail.com / operador123 (se registra con @gmail.com).
+Permisos:
+Puede registrar nuevos eventos y consultar la información de eventos existentes.
+Puede editar detalles logísticos (nombre, fecha, hora, lugar, descripción).
+Restricción clave: El selector de Estado del evento le aparece bloqueado. No puede cambiar si un evento está cancelado o finalizado.
+Puede gestionar participantes (inscribir, editar, eliminar, exportar a Excel).
+Puede gestionar inventario de recursos y cronograma de actividades.
+No tiene acceso a respaldar o restaurar la base de datos en Configuración.
+3. 👤 Modo Invitado (Solo Lectura / Público)
+
+Cualquier persona que abra la aplicación sin haber iniciado sesión entra automáticamente en este modo.
+
+Sin contraseña.
+Permisos:
+Puede ver el Dashboard de Inicio, la cartelera de eventos del mes y el Calendario.
+Restricción total: Si intenta crear, modificar o eliminar eventos o participantes, el sistema le bloquea la acción con la advertencia:
+"Debes iniciar sesión para realizar esta acción."
